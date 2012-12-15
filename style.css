@@ -1,0 +1,80 @@
+div
+{
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+}
+
+@font-face
+{
+    font-family:vg_font;
+    src:url('assets/page/fonts/emulogic.ttf');
+}
+
+body
+{
+  font-family:vg_font, Courrier;
+  background-color:#EEEEEE;
+}
+
+#loading
+{
+  position:absolute;
+  top:0px;
+  left:0px;
+}
+
+.scene
+{
+  display:none;
+  margin:50px auto;
+}
+
+.intro_button
+{
+  width:300px;
+  text-align:center;
+  border:5px solid black;
+  margin:10px auto;
+  padding:10px;
+}
+
+.input_wrapper
+{
+  width:300px;
+  text-align:center;
+  margin:10px auto;
+  padding:10px;
+}
+
+.intro_form
+{
+  width:300px;
+  border-collapse: collapse;
+}
+
+.form_left
+{
+  text-align:right;
+  width:150px;
+  padding:10px;
+}
+.form_right
+{
+  text-align:left;
+  width:150px;
+  padding:10px;
+}
+
+#stage
+{
+  border:1px solid black;
+  display:block;
+  margin:0px auto;
+}
+
+#shadow
+{
+  display:block;
+  margin:0px auto;
+}

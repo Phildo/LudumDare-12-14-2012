@@ -1,0 +1,85 @@
+<html>
+<head>
+<title>Minion Training Facility</title>
+<link rel='stylesheet' type='text/css' href='style.css' />
+<script type='text/javascript' src='js/utils/json2.js'></script>
+<script type='text/javascript' src='js/utils/async.js'></script>
+<script type='text/javascript' src='js/mvc/model.js'></script>
+<script type='text/javascript' src='js/mvc/viewcontroller.js'></script>
+<script type='text/javascript' src='js/mvc/services.js'></script>
+<script type='text/javascript' src='js/game/game.js'></script>
+<script type='text/javascript'>
+var services;
+var model;
+var vc;
+
+var game;
+
+function init()
+{
+  game = new Game();
+
+  services = new Services();
+  model = new Model();
+  vc = new VC();
+  vc.init();
+}
+
+window.addEventListener('load', init, false);
+</script>
+</head>
+<body>
+<div id='loading'>
+  loading...
+</div>
+
+<div id='intro' class='scene'>
+  <div id='choose_sign_in_button' class='button intro_button'>
+    SIGN IN
+  </div>
+  <div id='choose_create_account_button' class='button intro_button'>
+    CREATE ACCOUNT
+  </div>
+</div>
+
+<div id='sign_in' class='scene'>
+  <div id='sign_in_username' class='input_wrapper'>
+    <table class='form intro_form'><tr>
+      <td class='form_left'>USERNAME:</td>
+      <td class='form_right'><input id='sign_in_username_input' class='input intro_input' type='text'></input></td>
+    </tr><tr>
+      <td class='form_left'>PASSWORD:</td>
+      <td class='form_right'><input id='sign_in_password_input' class='input intro_input' type='password'></input></td>
+    </tr></table>
+  </div>
+  <div id='confirm_sign_in_button' class='button intro_button'>
+    SIGN IN
+  </div>
+</div>
+
+<div id='create_account' class='scene'>
+  <div id='create_account_username' class='input_wrapper'>
+    <table class='form intro_form'><tr>
+      <td class='form_left'>USERNAME:</td>
+      <td class='form_right'><input id='create_account_username_input' class='input intro_input' type='text'></input></td><td><img id='create_account_username_feedback'></img></td>
+    </tr><tr>
+      <td class='form_left'>PASSWORD:</td>
+      <td class='form_right'><input id='create_account_password_input_1' class='input intro_input' type='password'></input></td><td><img id='create_account_password_feedback_1'></img></td>
+    </tr><tr>
+      <td class='form_left'>RETYPE:</td>
+      <td class='form_right'><input id='create_account_password_input_2' class='input intro_input' type='password'></input></td><td><img id='create_account_password_feedback_2'></img></td>
+    </tr></table>
+  </div>
+  <div id='confirm_create_account_button' class='button intro_button'>
+    CREATE ACCOUNT
+  </div>
+</div>
+
+<div id='gameplay' class='scene'>
+<canvas id='stage' width='640' height='320'>
+</canvas>
+<img id='shadow' src='assets/page/shadow.png'></img>
+</div>
+
+</body>
+</html>
