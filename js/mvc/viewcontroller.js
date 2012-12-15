@@ -8,6 +8,7 @@ var VC = function()
   var intro = document.getElementById('intro');
     var chooseSignInButton = document.getElementById('choose_sign_in_button');
     var chooseCreateAccountButton = document.getElementById('choose_create_account_button');
+    var choosePlayAsGuestButton = document.getElementById('choose_play_as_guest_button');
   var signInPage = document.getElementById('sign_in');
     var signInUsernameInput = document.getElementById('sign_in_username_input');
     var signInPasswordInput = document.getElementById('sign_in_password_input');
@@ -32,8 +33,10 @@ var VC = function()
     //Intro
     chooseSignInButton.addEventListener('click', function(e) { chooseSignInButtonClicked(e); }, false);
     chooseCreateAccountButton.addEventListener('click', function(e) { chooseCreateAccountButtonClicked(e); }, false);
+    choosePlayAsGuestButton.addEventListener('click', function(e) { choosePlayAsGuestButtonClicked(e); }, false);
 
     //SignIn
+    signInPasswordInput.addEventListener('keydown', function(e) { signInPasswordInputKeyDown(e); }, false);
     confirmSignInButton.addEventListener('click', function(e) { confirmSignInButtonClicked(e); }, false);
 
     //CreateAccount
@@ -41,16 +44,37 @@ var VC = function()
     createAccountPasswordOneInput.addEventListener('input', function(e) { createAccountPasswordOneInputChanged(e); }, false);
     createAccountPasswordTwoInput.addEventListener('input', function(e) { createAccountPasswordTwoInputChanged(e); }, false);
     confirmCreateAccountButton.addEventListener('click', function(e) { confirmCreateAccountButtonClicked(e); }, false);
-    
-    setScene(intro);
+
+    var pretendLoginObject = {};
+    pretendLoginObject.username = readCookie('username');
+    pretendLoginObject.playerId = readCookie('playerId');
+    pretendLoginObject.secret = readCookie('secret');
+    if(pretendLoginObject.username && 
+      pretendLoginObject.playerId && 
+      pretendLoginObject.secret)
+      loginAttemptReturned(pretendLoginObject);
+    else
+      setScene(intro);
+
     self.decrementLoadingCount();
   }
 
   function cacheImages()
   {
-    images[images.length] = new Image('assets/page/shadow.png');
-    images[images.length] = new Image('assets/page/good.png');
-    images[images.length] = new Image('assets/page/bad.png');
+    images[images.length] = new Image();
+    images[images.length-1].src = 'assets/page/shadow.png';
+    images[images.length] = new Image();
+    images[images.length-1].src = 'assets/page/good.png';
+    images[images.length] = new Image();
+    images[images.length-1].src = 'assets/page/bad.png';
+    images[images.length] = new Image();
+    images[images.length-1].src = 'assets/game/title_bg.png';
+    images[images.length] = new Image();
+    images[images.length-1].src = 'assets/game/save_button_unused.png';
+    images[images.length] = new Image();
+    images[images.length-1].src = 'assets/game/save_button_used.png';
+    images[images.length] = new Image();
+    images[images.length-1].src = 'assets/game/save_button_down.png';
   }
 
   this.incrementLoadingCount = function()
@@ -79,6 +103,7 @@ var VC = function()
   function chooseSignInButtonClicked(e)
   {
     setScene(signInPage);
+    signInUsernameInput.focus();
   }
 
   function chooseCreateAccountButtonClicked(e)
@@ -87,9 +112,9 @@ var VC = function()
     setScene(createAccountPage);
   }
 
-  function confirmSignInButtonClicked(e)
+  function choosePlayAsGuestButtonClicked(e)
   {
-    
+      services.createAccount('guest_'+Date.now(), 'imAPoop', function(result) { loginAttemptReturned(JSON.parse(result).data); });
   }
 
   function createAccountUsernameInputBlurred(e)
@@ -180,6 +205,12 @@ var VC = function()
       game.init();
       setScene(gameplayScreen);
     }
+  }
+
+  function signInPasswordInputKeyDown(e)
+  {
+    if(e.keyCode == 13)
+      confirmSignInButtonClicked(e);
   }
 
   function confirmSignInButtonClicked(e)

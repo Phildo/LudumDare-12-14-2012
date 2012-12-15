@@ -14,4 +14,9 @@ var Services = function()
   {
     callService('loginaccount',callback,false,'username='+username+'&password='+password);
   }
+
+  this.getSaves = function(playerId, secret, callback)
+  {
+    callService('getsaves',callback,false,'playerId='+playerId+'&secret='+secret);
+  }
 }

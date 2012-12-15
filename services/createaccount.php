@@ -17,6 +17,7 @@ if(isset($_POST['username']) && isset($_POST['password']))
     $newPlayerId = $con->query("INSERT INTO players (username, password, secret, created) VALUES ('".$u."', '".md5($p)."', '".$secret."', NOW());");
     $loginObj = new stdClass;
     $loginObj->playerId = $newPlayerId;
+    $loginObj->username = $u;
     $loginObj->secret = $secret;
     $con->echoResult(0,$loginObj);
   }

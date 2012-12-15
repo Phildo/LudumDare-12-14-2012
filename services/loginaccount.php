@@ -15,6 +15,7 @@ if(isset($_POST['username']) && isset($_POST['password']))
   {
     $loginObj = new stdClass;
     $loginObj->playerId = $exists->player_id;
+    $loginObj->username = $u;
     $loginObj->secret = $exists->secret;
     $con->echoResult(0,$loginObj);
   }
