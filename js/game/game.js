@@ -9,9 +9,10 @@ var Game = function()
   var clickables = [];
 
   var bgImage = new Image();
-  var saveButtonUnused = new Image();
-  var saveButtonUsed = new Image();
-  var saveButtonDown = new Image();
+  var saveButtonUnusedImage = new Image();
+  var saveButtonUsedImage = new Image();
+  var saveButtonDownImage = new Image();
+  var minionImage = new Image();
 
   var bg;
   var saveButtons = [];
@@ -20,9 +21,10 @@ var Game = function()
   this.init = function()
   {
     bgImage.src = 'assets/game/title_bg.png';
-    saveButtonUnused.src = 'assets/game/save_button_unused.png';
-    saveButtonUsed.src = 'assets/game/save_button_used.png';
-    saveButtonDown.src = 'assets/game/save_button_down.png';
+    saveButtonUnusedImage.src = 'assets/game/save_button_unused.png';
+    saveButtonUsedImage.src = 'assets/game/save_button_used.png';
+    saveButtonDownImage.src = 'assets/game/save_button_down.png';
+    minionImage.src = 'assets/game/minion.png';
 
     gamemodel = new GameModel();
     gamemodel.init();
@@ -30,9 +32,9 @@ var Game = function()
     drawingman.init();
 
     bg = drawingman.registerDrawable(bgImage, 0, 0, 640, 320);
-    saveButtons[saveButtons.length] = drawingman.registerDrawable(saveButtonUnused, 380, 20, 240, 60);
-    saveButtons[saveButtons.length] = drawingman.registerDrawable(saveButtonUnused, 380, 130, 240, 60);
-    saveButtons[saveButtons.length] = drawingman.registerDrawable(saveButtonUnused, 380, 240, 240, 60);
+    saveButtons[saveButtons.length] = drawingman.registerDrawable(saveButtonUnusedImage, 380, 20, 240, 60);
+    saveButtons[saveButtons.length] = drawingman.registerDrawable(saveButtonUnusedImage, 380, 130, 240, 60);
+    saveButtons[saveButtons.length] = drawingman.registerDrawable(saveButtonUnusedImage, 380, 240, 240, 60);
 
     drawingman.draw();
 
@@ -58,7 +60,9 @@ var Game = function()
         point.y > clickables[i].y &&
         point.x < clickables[i].x+clickables[i].width &&
         point.y < clickables[i].y+clickables[i].height)
-        clickables[i].callback();
+        {
+          clickables[i].callback();
+        }
     }
   }
 
@@ -75,13 +79,14 @@ var Game = function()
       saveButtonClickables = [];
       for(var i = 0; i < model.saves.length; i++)
       {
-        saveButtons[i] = drawingman.registerDrawable(saveButtonUsed, 380, 20+(110*i), 240, 60);
+        saveButtons[i] = drawingman.registerDrawable(saveButtonUsedImage, 380, 20+(110*i), 240, 60);
         saveButtonClickables[i] = registerClickable(380, 20+(110*i), 240, 60, function() { loadSave(i); });
       }
       for(var i = model.saves.length; i < 3; i++)
       {
-        saveButtons[saveButtons.length] = drawingman.registerDrawable(saveButtonUnused, 380, 20+(110*i), 240, 60);
-        saveButtonClickables[i] = registerClickable(380, 20+(110*i), 240, 60, function() { createSave(i); });
+        saveButtons[saveButtons.length] = drawingman.registerDrawable(saveButtonUnusedImage, 380, 20+(110*i), 240, 60);
+        var j = i;
+        saveButtonClickables[i] = registerClickable(380, 20+(110*i), 240, 60, function() { createSave(j); });
       }
       drawingman.draw();
     }
@@ -114,6 +119,10 @@ var Game = function()
 
   function createSave(i)
   {
-    alert('create');
+    model.saves[i] = new Save();
+    model.saves[i].randomizeMinions();
+    alert(i);
+    drawingman.registerDrawable(minionImage, 400, 30+(110*i), 20, 20);
+    drawingman.draw();
   }
 }

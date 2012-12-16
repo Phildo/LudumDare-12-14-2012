@@ -75,6 +75,8 @@ var VC = function()
     images[images.length-1].src = 'assets/game/save_button_used.png';
     images[images.length] = new Image();
     images[images.length-1].src = 'assets/game/save_button_down.png';
+    images[images.length] = new Image();
+    images[images.length-1].src = 'assets/game/minion.png';
   }
 
   this.incrementLoadingCount = function()

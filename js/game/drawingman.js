@@ -6,11 +6,13 @@ var DrawingMan = function()
   var context = canvas.getContext('2d');
 
   var drawables = [];
+  var writables = [];
 
   this.init = function()
   {
     context.fillStyle = '#000000';
     context.fillRect(0,0,640,320);
+    context.font = "20pt vg_font";
 
     self.draw();
   }
@@ -19,6 +21,8 @@ var DrawingMan = function()
   {
     for(var i = 0; i < drawables.length; i++)
       context.drawImage(drawables[i].image, drawables[i].x, drawables[i].y, drawables[i].width, drawables[i].height);
+    for(var i = 0; i < writables.length; i++)
+      context.fillText(writables[i].text, writables[i].x, writables[i].y);
   }
 
   this.registerDrawable = function(image, x, y, width, height)
@@ -41,4 +45,21 @@ var DrawingMan = function()
       drawables[i].index--
   }
 
+  this.registerWritable = function(text, x, y)
+  {
+    var writable = {};
+    writable.text = text;
+    writable.x = x;
+    writable.y = y;
+    writables[writables.length] = writable;
+    writable.index = writables.length-1;
+    return writable;
+  }
+
+  this.unregisterWritable = function(index)
+  {
+    writables.splice(index,1);
+    for(var i = index; i < writables.length; i++)
+      writables[i].index--
+  }
 }
